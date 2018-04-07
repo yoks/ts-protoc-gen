@@ -13,9 +13,10 @@ export function generateGrpcWebService(filename: string, descriptor: FileDescrip
   if (descriptor.getServiceList().length === 0) {
     return [];
   }
+  const serviceDescriptor = new GrpcWebServiceDescriptor(descriptor, exportMap);
   return [
-    createFile(generateTypescriptDefinition(descriptor, exportMap), `${filename}_service.d.ts`),
-    createFile(generateJavaScript(descriptor, exportMap), `${filename}_service.js`),
+    createFile(generateTypescriptDefinition(serviceDescriptor), `${filename}_service.d.ts`),
+    createFile(generateJavaScript(serviceDescriptor), `${filename}_service.js`),
   ];
 }
 
@@ -51,7 +52,7 @@ function isUsed(fileDescriptor: FileDescriptorProto, pseudoNamespace: string, ex
   });
 }
 
-type ImportDescriptor = {
+export type ImportDescriptor = {
   readonly namespace: string
   readonly path: string
 };
@@ -150,8 +151,7 @@ class GrpcWebServiceDescriptor {
   }
 }
 
-function generateTypescriptDefinition(fileDescriptor: FileDescriptorProto, exportMap: ExportMap) {
-  const serviceDescriptor = new GrpcWebServiceDescriptor(fileDescriptor, exportMap);
+function generateTypescriptDefinition(serviceDescriptor: GrpcWebServiceDescriptor) {
   const printer = new Printer(0);
 
   // Header.
@@ -195,8 +195,7 @@ function generateTypescriptDefinition(fileDescriptor: FileDescriptorProto, expor
   return printer.getOutput();
 }
 
-function generateJavaScript(fileDescriptor: FileDescriptorProto, exportMap: ExportMap) {
-  const serviceDescriptor = new GrpcWebServiceDescriptor(fileDescriptor, exportMap);
+function generateJavaScript(serviceDescriptor: GrpcWebServiceDescriptor) {
   const printer = new Printer(0);
 
   // Header.

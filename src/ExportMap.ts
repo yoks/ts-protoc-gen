@@ -24,6 +24,14 @@ export type ExportEnumEntry = {
   enumOptions: EnumOptions,
 }
 
+export function isExportMessageEntry(obj: any): obj is ExportMessageEntry {
+  return !!obj
+    && typeof obj === "object"
+    && typeof obj.pkg === "string"
+    && typeof obj.fileName === "string"
+    && obj.hasOwnProperty("messageOptions");
+}
+
 export class ExportMap {
   messageMap: {[key: string]: ExportMessageEntry} = {};
   enumMap: {[key: string]: ExportEnumEntry} = {};
