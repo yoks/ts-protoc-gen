@@ -30,8 +30,8 @@
   "license": "Apache-2.0",
   "dependencies": {},
   "devDependencies": {
-    "@bazel/karma": "0.21.0",
-    "@bazel/typescript": "0.21.0",
+    "@bazel/karma": "0.22.1",
+    "@bazel/typescript": "0.22.1",
     "@improbable-eng/grpc-web": "^0.8.0",
     "@types/chai": "^3.5.2",
     "@types/google-protobuf": "^3.2.7",
